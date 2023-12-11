@@ -14,8 +14,7 @@
     @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control" })
     <br />
     @Html.Label("Kategori")
-    @*@Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.values,
-        new { @class = "form-control" })*@
+    @Html.DropDownListFor(x => x.CategoryID, (List<SelectListItem>)ViewBag.values, new { @class = "form-control" })
     <br />
     @Html.Label("Resim Yolu")
     @Html.TextBoxFor(x => x.BlogImage, new { @class = "form-control" })
@@ -24,8 +23,8 @@
     @Html.TextBoxFor(x => x.BlogDate, new { @class = "form-control" })
     <br />
     @Html.Label("Yazar")
-    @*@Html.DropDownListFor(x => x.AuthorID, (List<SelectListItem>)ViewBag.authorValues,
-        new { @class = "form-control" })*@
+    @Html.DropDownListFor(x => x.AuthorID, (List<SelectListItem>)ViewBag.authorValues,
+        new { @class = "form-control" })
     <br />
     @Html.Label("İçerik")
     @Html.TextAreaFor(x => x.BlogContent, 10, 20, new { @class = "form-control" })

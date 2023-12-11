@@ -43,5 +43,20 @@ namespace BusinessLayer.Concrete
             Blog blog = repoBlog.Find(x => x.BlogID == p);
             return repoBlog.Delete(blog);
         }
+        public Blog FindBlog(int id)
+        {
+            return repoBlog.Find(x=>x.BlogID == id);
+        }
+        public int UpdateBlog(Blog p)
+        {
+            Blog blog = repoBlog.Find(x => x.BlogID == p.BlogID);
+            blog.BlogTitle = p.BlogTitle;
+            blog.BlogContent = p.BlogContent;
+            blog.BlogDate = p.BlogDate;
+            blog.BlogImage = p.BlogImage;
+            blog.CategoryID = p.CategoryID;
+            blog.AuthorID = p.AuthorID;
+            return repoBlog.Update(blog);
+        }
     }
 }

@@ -148,6 +148,7 @@ namespace BlogProje.Controllers
         [HttpGet]
         public ActionResult AddNewBlog()
         {
+            #region Kategori/Yazar SelectList
             Context c = new Context(); //contex nesnesi ile tüm sınıflara ulaşıyoruz
             List<SelectListItem>values=(from x in c.Categories.ToList() //selectlistitem sınıf içerisindeki verileri viewbag ile
                 select new SelectListItem                               //sayfaya taşımamızı sağlıyor içine sorgu yazılmalı
@@ -163,6 +164,7 @@ namespace BlogProje.Controllers
                     Value = x.AuthorID.ToString()
                 }).ToList();
             ViewBag.authorValues = authorValues;
+            #endregion
             return View();
         }
         [HttpPost]
@@ -176,9 +178,52 @@ namespace BlogProje.Controllers
             bm.DeleteBlogBL(id);
             return RedirectToAction("AdminBlogList");
         }
+        [HttpGet]
         public ActionResult UpdateBlog(int id)
         {
-            return View();
+            Blog blog = bm.FindBlog(id);
+                #region Kategori ve Yazar Dropdown
+            Context c = new Context(); //contex nesnesi ile tüm sınıflara ulaşıyoruz
+            List<SelectListItem> values = (from x in c.Categories.ToList() //selectlistitem sınıf içerisindeki verileri viewbag ile
+                                           select new SelectListItem                               //sayfaya taşımamızı sağlıyor içine sorgu yazılmalı
+                                           {
+                                               Text = x.CategoryName, //dropdown da gösterilecek seçeneklerde nasıl seçtirilmeli 
+                                               Value = x.CategoryID.ToString() //modele gönderilecek veriyi seçiyoruz
+                                           }).ToList(); //listeye atılmalı
+            ViewBag.values = values; //selectlist ile çektiğimiz verileri sayfaya çekmek için viewbag içine alıyoruz
+            List<SelectListItem> authorValues = (from x in c.Authors.ToList()
+                                                 select new SelectListItem
+                                                 {
+                                                     Text = x.AuthorName,
+                                                     Value = x.AuthorID.ToString()
+                                                 }).ToList();
+            ViewBag.authorValues = authorValues;
+            #endregion
+            return View(blog);
+        }
+        [HttpPost]
+        public ActionResult UpdateBlog(Blog p)
+        {
+            bm.UpdateBlog(p);
+            return RedirectToAction("AdminBlogList");
+        }
+        public ActionResult GetCommentById(int id)
+        {
+            CommentManager commentManager = new CommentManager();
+            var commentlist = commentManager.GetCommentByBlog(id);
+            var commentdetails = bm.FindBlog(id);
+            #region Yorum Detaylarında Blog Bilgisi ViewBagleri
+            ViewBag.CommentTitle = commentdetails.BlogTitle;
+            ViewBag.CommentId = commentdetails.BlogID;
+            ViewBag.BlogImage = commentdetails.BlogImage;
+            #endregion
+            return View(commentlist);
+        }
+        public ActionResult GetAuthorAll()
+        {
+            AuthorManager authorManager = new AuthorManager();
+            var authorList = authorManager.GetAll();
+            return View(authorList);
         }
     }
 }

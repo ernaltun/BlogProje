@@ -225,5 +225,6 @@ namespace BlogProje.Controllers
             var authorList = authorManager.GetAll();
             return View(authorList);
         }
+
     }
 }

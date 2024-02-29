@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,6 +21,14 @@ namespace BusinessLayer.Concrete
         {
             return repoComment.List(x => x.BlogID == id);
         }
+        public List<Comment> CommentByStatusTrue()
+        {
+            return repoComment.List(x => x.CommentStatus == true);
+        }
+        public List <Comment> CommentByStatusFalse()
+        {
+            return repoComment.List(x=>x.CommentStatus == false);
+        }
         public int CommentAdd(Comment c)
         {
             if(c.CommentText.Length<=4 || c.CommentText.Length>=301||
@@ -29,5 +38,17 @@ namespace BusinessLayer.Concrete
             }
             return repoComment.Insert(c);
         }
-    }
+        public int ChangeToCommentStatus(int id)
+        {
+            Comment comment = repoComment.Find(x=> x.CommentID == id);
+            comment.CommentStatus = false;
+            return repoComment.Update(comment);
+        }
+		public int ChangeToCommentStatusToTrue(int id)
+		{
+			Comment comment = repoComment.Find(x => x.CommentID == id);
+			comment.CommentStatus = true;
+			return repoComment.Update(comment);
+		}
+	}
 }

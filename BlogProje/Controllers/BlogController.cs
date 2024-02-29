@@ -145,7 +145,12 @@ namespace BlogProje.Controllers
             var blogList = bm.GetAll();
             return View(blogList);
         }
-        [HttpGet]
+		public ActionResult AdminBlogList2()
+		{
+			var blogList = bm.GetAll();
+			return View(blogList);
+		}
+		[HttpGet]
         public ActionResult AddNewBlog()
         {
             #region Kategori/Yazar SelectList

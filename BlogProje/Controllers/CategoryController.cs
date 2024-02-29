@@ -20,5 +20,10 @@ namespace BlogProje.Controllers
             var categoryValues = cm.GetAll();
             return PartialView(categoryValues);
         }
+        public ActionResult AdminCategoryList()
+        {
+            var categories = cm.GetAll();
+            return View(categories);
+        } 
     }
 } 

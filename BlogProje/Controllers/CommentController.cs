@@ -28,6 +28,32 @@ namespace BlogProje.Controllers
             commentManager.CommentAdd(c);
             return PartialView();
         }
+        public ActionResult AdminCommentListTrue()
+        {
+            var commmentList = commentManager.CommentByStatusTrue().OrderByDescending(x => x.CommentID);
+            return View(commmentList);
+        }
+        public ActionResult AdminCommentListFalse()
+        {
+            var commenListFalse = commentManager.CommentByStatusFalse().OrderByDescending(x => x.CommentID);
+            return View(commenListFalse);
+        }
+        public ActionResult ChangeCommentStatusToFalse(int id)
+        {
+            commentManager.ChangeToCommentStatus(id);
+            return RedirectToAction("AdminCommentListTrue");
+        }
+		public ActionResult ChangeCommentStatusToTrue(int id)
+		{
+			commentManager.ChangeToCommentStatusToTrue(id);
+			return RedirectToAction("AdminCommentListTrue");
+		}
+        public ActionResult GetAllComments()
+        {
+            var commentList = commentManager.CommentList();
+            
+            return View(commentList);
+        }
 
-    }
+	}
 }
